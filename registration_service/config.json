@@ -1,11 +1,11 @@
 {
-  "listen": "127.0.0.1:8082",
-  "event_service": "127.0.0.1:8081",
+  "listen": "35.254.228.219:8082",
+  "event_service": "35.254.228.219:8081",
   "db": {
-    "host": "127.0.0.1",
+    "host": "35.254.228.219",
     "port": 3306,
-    "user": "root",
-    "password": "",
+    "user": "campus",
+    "password": "mrlaw",
     "database": "registration_db"
   }
 }
