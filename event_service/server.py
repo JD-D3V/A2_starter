@@ -35,6 +35,14 @@ class EventService(rpc.EventServiceServicer):
         write("UPDATE events SET seats_taken = seats_taken - 1 WHERE event_id = %s", (request.event_id,))
         return pb.Empty()
 
+    def ListEvents(self, request, context):
+        text = request.name_filter.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+        rows = read("""
+            SELECT event_id, name, capacity, capacity - seats_taken AS available_seats
+            FROM events WHERE name LIKE %s ORDER BY event_id
+        """, (f"%{text}%"))
+        return pb.EventsList(events=[pb.Event(**row) for row in rows])
+
 
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=8))
 rpc.add_EventServiceServicer_to_server(EventService(), server)
