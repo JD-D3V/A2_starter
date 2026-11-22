@@ -3,11 +3,14 @@ syntax = "proto3";
 package campus.registrations.v1;
 
 service RegistrationService {
+  rpc CreateBooking(CreateBookingRequest) returns (Booking);
   rpc CancelBooking(BookingId) returns (Empty);
   rpc GetParticipant(ParticipantId) returns (Participant);
   rpc CreateParticipant(CreateParticipantRequest) returns (Participant);
 }
 
+message CreateBookingRequest { int64 event_id = 1; int64 participant_id = 2; }
+message Booking { int64 booking_id = 1; int64 event_id = 2; int64 participant_id = 3; string participant_name = 4; }
 message BookingId { int64 booking_id = 1; }
 message CreateParticipantRequest { string name = 1; }
 message ParticipantId { int64 participant_id = 1; }
